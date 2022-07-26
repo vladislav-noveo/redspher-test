@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div>
+    </div>  
+    <form action="/calculate" method="POST">
+        <div class="row">
+            <table id="calcu">
+            <tbody><tr>
+                <td colspan="3"><input type="text" name="input" value="{{ solution }}"/></td>
+                <td><input type="button" value="c" onclick="clearInput()"> </td>
+            </tr>
+            <tr>
+                <td><input type="button" value="1" onclick="appendSymbol('1')"> </td>
+                <td><input type="button" value="2" onclick="appendSymbol('2')"> </td>
+                <td><input type="button" value="3" onclick="appendSymbol('3')"> </td>
+                <td><input type="button" value="/" onclick="appendSymbol('/')"> </td>
+            </tr>
+            <tr>
+                <td><input type="button" value="4" onclick="appendSymbol('4')"> </td>
+                <td><input type="button" value="5" onclick="appendSymbol('5')"> </td>
+                <td><input type="button" value="6" onclick="appendSymbol('6')"> </td>
+                <td><input type="button" value="*" onclick="appendSymbol('*')"> </td>
+            </tr>
+            <tr>
+                <td><input type="button" value="7" onclick="appendSymbol('7')"> </td>
+                <td><input type="button" value="8" onclick="appendSymbol('8')"> </td>
+                <td><input type="button" value="9" onclick="appendSymbol('9')"> </td>
+                <td><input type="button" value="-" onclick="appendSymbol('-')"> </td>
+            </tr>
+            <tr>
+                <td><input type="button" value="0" onclick="appendSymbol('0')"> </td>
+                <td><input type="button" value="." onclick="appendSymbol('.')"> </td>
+                <td><input type="submit" value="="/></td>
+
+                <td><input type="button" value="+" onclick="appendSymbol('+')"> </td>
+            </tr>
+        </tbody></table>
+        </div>
+    </form>
+
+    <script src="{{ asset('js/calc.js') }}"></script>
+{% endblock %}
