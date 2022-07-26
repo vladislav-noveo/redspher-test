@@ -4,17 +4,15 @@ namespace App\Tests\Feature\Service;
 
 use App\Service\CalculationService;
 use App\Service\CalculationServiceInterface;
-use App\Tests\AbstractWebTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class CalculationServiceTest extends AbstractWebTestCase
+class CalculationServiceTest extends KernelTestCase
 {
     private CalculationService $service;
 
     public function setUp(): void
     {
-        parent::setUp();
-
-        $this->service = $this->container->get(CalculationServiceInterface::class);
+        $this->service = static::getContainer()->get(CalculationServiceInterface::class);
     }
 
     /**
@@ -77,6 +75,14 @@ class CalculationServiceTest extends AbstractWebTestCase
             [
                 'problem' => '2/2/2',
                 'solution' => 0.5,
+            ],
+            [
+                'problem' => '2+3*4-2/5',
+                'solution' => 13.6,
+            ],
+            [
+                'problem' => '2-1*4/5+5/2',
+                'solution' => 3.7,
             ],
         ];
     }

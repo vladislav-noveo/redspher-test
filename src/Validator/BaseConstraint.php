@@ -8,7 +8,7 @@ abstract class BaseConstraint extends Constraint
 {
     public string $message;
     /**
-     * {@inheritDoc}
+     * @return string
      */
     public function validatedBy()
     {

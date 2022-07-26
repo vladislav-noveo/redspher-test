@@ -5,8 +5,11 @@ namespace App\Validator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class ValidMathProblemValidator extends ConstraintValidator
+final class IsValidFormulaValidator extends ConstraintValidator
 {
+    public function __construct()
+    {}
+
     private $regex = "/^\d+(\.\d+){0,1}([+\-*\/]{1}\d+(\.\d+){0,1})+$/";
     public function validate($value, Constraint $constraint)
     {

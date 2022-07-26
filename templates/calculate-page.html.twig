@@ -1,13 +1,14 @@
 {% extends "base.html.twig" %}
 
-{% block body %}
-    <div>
-    </div>  
-    <form action="/calculate" method="POST">
+{% block body %}  
+    {{ form_start(form) }}
+        <div class="row">
+            {{ form_errors(form) }}
+        </div>
         <div class="row">
             <table id="calcu">
             <tbody><tr>
-                <td colspan="3"><input type="text" name="input" value="{{ solution }}"/></td>
+                <td colspan="3">{{ form_row(form.input) }}</td>
                 <td><input type="button" value="c" onclick="clearInput()"> </td>
             </tr>
             <tr>
@@ -31,7 +32,7 @@
             <tr>
                 <td><input type="button" value="0" onclick="appendSymbol('0')"> </td>
                 <td><input type="button" value="." onclick="appendSymbol('.')"> </td>
-                <td><input type="submit" value="="/></td>
+                <td>{{ form_row(form.submit) }}</td>
 
                 <td><input type="button" value="+" onclick="appendSymbol('+')"> </td>
             </tr>

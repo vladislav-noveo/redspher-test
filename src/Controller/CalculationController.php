@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\DTO\CalculationDTO;
+use App\Form\Type\CalculationDTOType;
 use App\Service\CalculationService;
 use App\Validator\ValidMathProblem;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,24 +24,29 @@ final class CalculationController extends AbstractController
     #[Route('/calculate', name: 'calculator.page', methods: 'GET')]
     public function getPage(Request $request): Response
     {
-        return $this->render('calculate-page.html.twig', ['solution' => $request->query->get('solution')]);
+        if ($solution = $request->query->get('solution')) {
+            $dto = new CalculationDTO();
+            $dto->setInput($solution);
+        }
+        $form = $this->createForm(CalculationDTOType::class, $dto ?? null);
+    
+        return $this->renderForm('calculate-page.html.twig', ['solution' => $request->query->get('solution'), 'form' => $form]);
     }
 
     #[Route('/calculate', name: 'calculator.doCalc', methods: 'POST')]
     public function doCalculation(Request $request, CalculationService $service)
     {
-        $input = $request->request->get('input');
-        $violations = $this->validator->validate(
-            $input,
-            new ValidMathProblem()
-        );
+        $form = $this->createForm(CalculationDTOType::class);
 
-        if ($violations->count()) {
-            throw new BadRequestHttpException($violations);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var CalculationDto $dto */
+            $dto = $form->getData();
+            $solution = $service->calculate($dto->getInput());
+
+            return $this->redirectToRoute('calculator.page', ['solution' => $solution]);
         }
 
-        $solution = $service->calculate($input);
-
-        return $this->redirectToRoute('calculator.page', ['solution' => $solution]);
+        return $this->renderForm('calculate-page.html.twig', ['form' => $form]);
     }
 }
